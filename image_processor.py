@@ -69,4 +69,4 @@ class image_processor():
     def load_objects(self):
         """ Repopulates IMAGE_DATA with binary objects in `image_data` file """
         with open('image_data' , 'r+b') as f:
-            self.image_data = pickle.load(f)
+            return pickle.load(f)
