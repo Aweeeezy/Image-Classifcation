@@ -1,6 +1,10 @@
 from os import listdir
 import csv
-from data import Image
+import data
+import pickle
+from skimage import io
+import skimage
+import numpy
 
 """
     This module contains the IMAGE_PROCESSOR class, which initializes with a
@@ -27,12 +31,19 @@ class image_processor():
     >>> processor = image_processor(image_dir, trainingLabels)
     >>> processor.images_levels[0]
     ('/Users/aweeeezy/bin/python/Image-Classifcation/files/images/10_left', '0')
+    >>> processor.image_data['10_left'].identifier
+    '10_left
+    >>> processor.image_data['10_left'].level
+    '0'
+    >>> processor.image_data['10_left'].pixels
+    #!#!#! YET TO BE IMPLENTED...ERROR ON IMPORT SKIMAGE.IO #!#!#!
     """
 
     images_levels = []
+    image_data = {}
 
     def __init__(self, image_dir, trainingLabels):
-        """ Writes image/label information into IMAGES_LEVELS, a list of tuples """
+        """ Appends image/label tuples to IMAGES_LEVELS, a list """
 
         with open(trainingLabels) as csvfile:
             for row in csv.DictReader(csvfile):
@@ -45,10 +56,17 @@ class image_processor():
 
         for tup in self.images_levels:
             identifier, level = tup[0].split('/')[-1], tup[1]
+            #image_pixels = io.imread(tup[0]) # can't import skimage.io!!!
+            image_pixels = None
+            i = data.image(identifier, level, image_pixels)
+            self.image_data[i.identifier] = i
 
-            # code for generating pixel grids goes here
+    def save_objects(self):
+        """ Writes IMAGE_DATA to file in binary for easy restoration of states """
+        with open('image_data', 'r+b') as f:
+            pickle.dump(self.image_data, f, -1)
 
-            image = image(identifier, level, "variable for pixel grid")
-
-
-
+    def load_objects(self):
+        """ Repopulates IMAGE_DATA with binary objects in `image_data` file """
+        with open('image_data' , 'r+b') as f:
+            self.image_data = pickle.load(f)
