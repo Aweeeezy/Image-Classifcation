@@ -1,6 +1,16 @@
 import pickle
 
+"""
+    This module has two classes: IMAGE, and DATA. IMAGE is a data abstraction
+    that represents each images w/ attributes: identifier, level, pixel grid,
+    etc. The DATA class is an object for storing and representing the summation
+    of our IMAGE instances in useful variations (to quickly access relevant
+    information while optimizing our algorithms.
+"""
+
 class image():
+    """ Data abstraction that contains all information for each image """
+
     identifier = ''
     level = ''
     pixels = ''
@@ -11,6 +21,9 @@ class image():
         self.pixels = pixels
 
 class data():
+    """ Set of dictionaries, each containing a different subset of all the
+    instances of IMAGE """
+
     healthy = {}
     unhealthy = {}
     all_images = {}
@@ -19,9 +32,5 @@ class data():
         with open('image_data', 'r+b') as f:
             self.all_images = pickle.load(f)
 
-        """ As of now, the first dictionary comprehesion doesn't work at all
-        (`len(data.healthy)` is 0) and the second comprension has a length equal
-        to ALL_IMAGES """
-
-        self.healthy = {k: v for k, v in self.all_images.items() if v.level is 0}
-        self.unhealthy = {k: v for k, v in self.all_images.items() if v.level is not 0}
+        self.healthy = {k: v for k, v in self.all_images.items() if v.level == '0'}
+        self.unhealthy = {k: v for k, v in self.all_images.items() if v.level != '0'}

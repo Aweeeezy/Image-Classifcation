@@ -16,9 +16,13 @@ import numpy
     each pair in IMAGES_LEVELS. Next, it generates the pixel grid to associate
     with each IMAGE.
 
-    The method, `save_objects()`, writes all these IMAGE objects as binary to a
+    *** NOTE: Skimage.io is not importing properly! ****
+
+    The method, `save_images()`, writes all these IMAGE objects as binary to a
     file so the post-processed data can be accessed by other modules for
     structuring into arbitrary groups, fed into classifiers, etc.
+
+    `load_images()` is a convienence method that returns IMAGE_DATA.
 """
 
 class image_processor():
@@ -39,8 +43,8 @@ class image_processor():
     #!#!#! YET TO BE IMPLENTED...ERROR ON IMPORT SKIMAGE.IO #!#!#!
     """
 
-    images_levels = []
-    image_data = {}
+    images_levels = [] # temporary container used to generate IMAGE_DATA
+    image_data = {} # final dictionary that contains all the IMAGE objects
 
     def __init__(self, image_dir, trainingLabels):
         """ Appends image/label tuples to IMAGES_LEVELS, a list """
@@ -57,16 +61,16 @@ class image_processor():
         for tup in self.images_levels:
             identifier, level = tup[0].split('/')[-1], tup[1]
             #image_pixels = io.imread(tup[0]) # can't import skimage.io!!!
-            image_pixels = None
+            image_pixels = None # remove after fixing skimage.io problem
             i = data.image(identifier, level, image_pixels)
             self.image_data[i.identifier] = i
 
-    def save_objects(self):
+    def save_images(self):
         """ Writes IMAGE_DATA to file in binary for easy restoration of states """
         with open('image_data', 'r+b') as f:
             pickle.dump(self.image_data, f, -1)
 
-    def load_objects(self):
+    def load_images(self):
         """ Repopulates IMAGE_DATA with binary objects in `image_data` file """
         with open('image_data' , 'r+b') as f:
             return pickle.load(f)
