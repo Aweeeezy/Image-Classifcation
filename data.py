@@ -26,9 +26,15 @@ class data():
     """ Collection of dictionaries, each containing a different subset of all
     the instances of IMAGE. """
 
+    all_images = {}
     healthy = {}
     unhealthy = {}
-    all_images = {}
+    level_1 = {}
+    level_2 = {}
+    level_3 = {}
+    level_4 = {}
+    left = {}
+    right = {}
 
     def __init__(self, image_data):
         with open('image_data', 'r+b') as f:
@@ -36,3 +42,11 @@ class data():
 
         self.healthy = {k: v for k, v in self.all_images.items() if v.level == '0'}
         self.unhealthy = {k: v for k, v in self.all_images.items() if v.level != '0'}
+
+        self.level_1 = {k: v for k, v in self.unhealthy.items() if v.level == '1'}
+        self.level_2 = {k: v for k, v in self.unhealthy.items() if v.level == '2'}
+        self.level_3 = {k: v for k, v in self.unhealthy.items() if v.level == '3'}
+        self.level_4 = {k: v for k, v in self.unhealthy.items() if v.level == '4'}
+
+        self.left = {k: v for k, v in self.all_images.items() if 'left' in k}
+        self.right = {k: v for k, v in self.all_images.items() if 'right' in k}

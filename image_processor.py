@@ -6,11 +6,11 @@ from skimage import io
 
 """
     This modules contains the IMAGE_PROCESSOR class which is used to take raw,
-    un-processed data, create IMAGE class instances for each data, generate a
-    dictionary, IMAGE_DATA, whose values are these IMAGE instances and keys are
-    their unique identifiers. Finally, this class writes IMAGE_DATA to a binary
-    file for so the processed data can be accessed by other modules for
-    structuring into arbitrary groups, fed into classifiers, etc.
+    un-processed data, create IMAGE class instances for each data, and generate
+    a dictionary, IMAGE_DATA, whose values are these IMAGE instances and keys
+    are their unique identifiers. Finally, this class writes IMAGE_DATA to a
+    binary file so the processed data can be accessed by other modules for
+    structuring into arbitrary groups, feeding into classifiers, etc.
 """
 
 class image_processor():
