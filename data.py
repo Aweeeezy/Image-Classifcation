@@ -1,28 +1,30 @@
 import pickle
 
 """
-    This module has two classes: IMAGE, and DATA. IMAGE is a data abstraction
-    that represents each images w/ attributes: identifier, level, pixel grid,
-    etc. The DATA class is an object for storing and representing the summation
-    of our IMAGE instances in useful variations (to quickly access relevant
-    information while optimizing our algorithms.
+    This module has two classes: IMAGE, and DATA.
+
+    IMAGE is a data abstraction that represents each images w/ attributes:
+    identifier, level, pixel grid, etc.
+
+    The DATA class is an object for storing and representing the summation
+    of our IMAGE instances in useful variations.
 """
 
 class image():
-    """ Data abstraction that contains all information for each image """
+    """ Data abstraction that contains all information for each image. """
 
     identifier = ''
     level = ''
     pixels = ''
 
-    def __init__(self, identifier, level, pixels=None):
+    def __init__(self, identifier, level, pixels):
         self.identifier = identifier
         self.level = level
         self.pixels = pixels
 
 class data():
-    """ Set of dictionaries, each containing a different subset of all the
-    instances of IMAGE """
+    """ Collection of dictionaries, each containing a different subset of all
+    the instances of IMAGE. """
 
     healthy = {}
     unhealthy = {}
